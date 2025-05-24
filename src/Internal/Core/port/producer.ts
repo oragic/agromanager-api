@@ -4,7 +4,7 @@ export interface ProducerRepository {
   create(data: ProdutorRural): Promise<ProdutorRural | null>;
   //find(): Promise<ProdutorRural[]>;
   findById(id: string): Promise<ProdutorRural | null>;
-  update(id: string): Promise<ProdutorRural | null>;
+  update(data: ProdutorRural): Promise<ProdutorRural | null>;
   remove(id: string): Promise<boolean>;
 }
 
