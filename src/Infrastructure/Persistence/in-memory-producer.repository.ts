@@ -1,4 +1,5 @@
 import { ProdutorRural } from 'src/Internal/Core/domain/Producer';
+import { ConflictError, NotFoundError } from 'src/Internal/Core/errors/errors';
 
 export class InMemoryProducer {
   private producers: ProdutorRural[] = [
@@ -28,16 +29,16 @@ export class InMemoryProducer {
   ];
 
   // eslint-disable-next-line @typescript-eslint/require-await
-  async findById(id: string): Promise<ProdutorRural | null> {
-    return this.producers.find((producer) => producer.id === id) || null;
+  async findById(id: string): Promise<ProdutorRural> {
+    const found = this.producers.find((p) => p.id === id);
+    if (!found) throw new NotFoundError('Producer', id);
+    return found;
   }
   // eslint-disable-next-line @typescript-eslint/require-await
-  async create(data: ProdutorRural): Promise<ProdutorRural | null> {
+  async create(data: ProdutorRural): Promise<ProdutorRural> {
     const exists = await this.findById(data.id);
-    if (exists) {
-      console.warn(`Producer with ID ${data.id} already exists.`);
-      return null;
-    }
+    if (exists)
+      throw new ConflictError(`Producer with ID ${data.id} already exists.`);
 
     this.producers.push(data);
     return data;
