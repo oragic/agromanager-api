@@ -10,4 +10,12 @@ export class ProducerService {
   async create(data: ProdutorRural): Promise<ProdutorRural | null> {
     return await this.producerRepository.create(data);
   }
+
+  async update(data: ProdutorRural): Promise<ProdutorRural | null> {
+    return await this.producerRepository.update(data);
+  }
+
+  async remove(id: string): Promise<boolean> {
+    return await this.producerRepository.remove(id);
+  }
 }
