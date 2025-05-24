@@ -31,4 +31,15 @@ export class InMemoryProducer {
   async findById(id: string): Promise<ProdutorRural | null> {
     return this.producers.find((producer) => producer.id === id) || null;
   }
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async create(data: ProdutorRural): Promise<ProdutorRural | null> {
+    const exists = await this.findById(data.id);
+    if (exists) {
+      console.warn(`Producer with ID ${data.id} already exists.`);
+      return null;
+    }
+
+    this.producers.push(data);
+    return data;
+  }
 }
