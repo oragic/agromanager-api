@@ -8,4 +8,8 @@ export class ProducerRepositoryAdapter implements ProducerRepository {
   async findById(id: string): Promise<ProdutorRural | null> {
     return await this.repository.findById(id);
   }
+
+  async create(data: ProdutorRural): Promise<ProdutorRural | null> {
+    return await this.repository.create(data);
+  }
 }
