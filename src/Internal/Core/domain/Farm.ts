@@ -1,4 +1,3 @@
-type Documento = string; //CPF OR CNPJ
 enum Cultura {
   SOJA = 'Soja',
   MILHO = 'Milho',
@@ -14,19 +13,13 @@ interface CulturaPlantada {
   safra: string;
 }
 
-interface Fazenda {
+export interface Fazenda {
+  id: string;
   nome: string;
   cidade: string;
   estado: string;
   areaTotalHA: number;
   areaAgricultavelHa: number;
   areaVegetacaoHa: number;
-}
-
-export interface ProdutorRural {
-  documento: Documento;
-  nome: string;
-  fazenda: Fazenda;
-  safras: string[];
   CulturasPlantadas: CulturaPlantada[];
 }
