@@ -42,4 +42,21 @@ export class InMemoryProducer {
     this.producers.push(data);
     return data;
   }
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async update(data: ProdutorRural): Promise<ProdutorRural | null> {
+    const index = this.producers.findIndex(
+      (producer) => producer.id === data.id,
+    );
+    if (index === -1) return null;
+
+    this.producers[index] = data;
+    return data;
+  }
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async remove(id: string): Promise<boolean> {
+    const index = this.producers.findIndex((producer) => producer.id === id);
+    if (index === -1) return false;
+    this.producers.splice(index, 1);
+    return true;
+  }
 }
