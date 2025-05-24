@@ -12,4 +12,12 @@ export class ProducerRepositoryAdapter implements ProducerRepository {
   async create(data: ProdutorRural): Promise<ProdutorRural | null> {
     return await this.repository.create(data);
   }
+
+  async update(data: ProdutorRural): Promise<ProdutorRural | null> {
+    return await this.repository.update(data);
+  }
+
+  async remove(id: string): Promise<boolean> {
+    return await this.repository.remove(id);
+  }
 }
