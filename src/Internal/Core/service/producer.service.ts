@@ -4,6 +4,7 @@ import { NotFoundError, ValidationError } from '../errors/errors';
 import { ProducerRepository } from '../port/producer';
 import { isValidDocument } from '../utils/document.utils';
 import { PRODUCER_REPOSITORY } from '../port/producer.tokens';
+import { usedAreaLessThan } from '../utils/farm.utils';
 @Injectable()
 export class ProducerService {
   constructor(
@@ -22,12 +23,7 @@ export class ProducerService {
     if (!isValidDocument(data.documento)) {
       throw new ValidationError(`Invalid document format: ${data.documento}`);
     }
-    function verifyTotalArea(totalArea: number, areas: any[]): boolean {
-      console.log(totalArea, areas);
-      return true;
-    }
-
-    if (verifyTotalArea(1, [{}]))
+    if (!usedAreaLessThan(data.fazendas))
       throw new ValidationError(
         `The sum of the areas cannot exceed the total area`,
       );
@@ -42,7 +38,10 @@ export class ProducerService {
     if (!isValidDocument(data.documento)) {
       throw new ValidationError(`Invalid document format: ${data.documento}`);
     }
-
+    if (!usedAreaLessThan(data.fazendas))
+      throw new ValidationError(
+        `The sum of the areas cannot exceed the total area`,
+      );
     const updated = await this.producerRepository.update(data);
     if (!updated) {
       throw new NotFoundError(
