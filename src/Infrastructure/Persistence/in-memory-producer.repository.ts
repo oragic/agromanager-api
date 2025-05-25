@@ -36,7 +36,7 @@ export class InMemoryProducer {
   }
   // eslint-disable-next-line @typescript-eslint/require-await
   async create(data: ProdutorRural): Promise<ProdutorRural> {
-    const exists = await this.findById(data.id);
+    const exists = this.producers.find((producer) => producer.id === data.id);
     if (exists)
       throw new ConflictError(`Producer with ID ${data.id} already exists.`);
 
