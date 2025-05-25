@@ -48,7 +48,10 @@ export class InMemoryProducer {
     const index = this.producers.findIndex(
       (producer) => producer.id === data.id,
     );
-    if (index === -1) return null;
+    if (index === -1)
+      throw new NotFoundError(
+        `Producer with ID ${data.id} not found for update`,
+      );
 
     this.producers[index] = data;
     return data;
@@ -56,7 +59,8 @@ export class InMemoryProducer {
   // eslint-disable-next-line @typescript-eslint/require-await
   async remove(id: string): Promise<boolean> {
     const index = this.producers.findIndex((producer) => producer.id === id);
-    if (index === -1) return false;
+    if (index === -1)
+      throw new NotFoundError(`Producer with ID ${id} not found for deletion`);
     this.producers.splice(index, 1);
     return true;
   }
