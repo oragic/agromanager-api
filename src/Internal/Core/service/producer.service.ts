@@ -1,5 +1,7 @@
 import { ProdutorRural } from '../domain/Producer';
+import { ValidationError } from '../errors/errors';
 import { ProducerRepository } from '../port/producer';
+import { isValidDocument } from '../utils/document.utils';
 export class ProducerService {
   constructor(private producerRepository: ProducerRepository) {}
 
@@ -8,6 +10,9 @@ export class ProducerService {
   }
 
   async create(data: ProdutorRural): Promise<ProdutorRural | null> {
+    if (!isValidDocument(data.documento)) {
+      throw new ValidationError(`Invalid document format: ${data.documento}`);
+    }
     return await this.producerRepository.create(data);
   }
 
