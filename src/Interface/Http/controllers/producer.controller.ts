@@ -17,24 +17,24 @@ export class ProducerController {
   @Get(':id')
   async findByd(@Param('id') id: string) {
     const producer = await this.producerService.findById(id);
-    return producer ? producer : { message: 'User not found' };
+    return producer;
   }
 
   @Post()
   async create(@Body() data: ProdutorRural) {
     const producer = await this.producerService.create(data);
-    return producer ? producer : { message: 'Error on create Producer' };
+    return producer;
   }
 
   @Put()
   async update(@Body() data: ProdutorRural) {
     const producer = await this.producerService.update(data);
-    return producer ? producer : { message: 'Error on update Producer' };
+    return producer;
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const removed = await this.producerService.remove(id);
-    return removed ? removed : { message: 'Error on remove Producer' };
+    return removed;
   }
 }
