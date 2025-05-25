@@ -1,9 +1,14 @@
+import { Inject, Injectable } from '@nestjs/common';
 import { ProdutorRural } from '../domain/Producer';
 import { ValidationError } from '../errors/errors';
 import { ProducerRepository } from '../port/producer';
 import { isValidDocument } from '../utils/document.utils';
+import { PRODUCER_REPOSITORY } from '../port/producer.tokens';
+@Injectable()
 export class ProducerService {
-  constructor(private producerRepository: ProducerRepository) {}
+  constructor(
+    @Inject(PRODUCER_REPOSITORY) private producerRepository: ProducerRepository,
+  ) {}
 
   async findById(id: string): Promise<ProdutorRural | null> {
     return await this.producerRepository.findById(id);

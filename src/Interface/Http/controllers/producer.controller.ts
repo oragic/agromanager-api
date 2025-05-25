@@ -7,15 +7,12 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ProducerRepositoryAdapter } from 'src/Internal/Adapters/repository/producer.repository';
 import { ProdutorRural } from 'src/Internal/Core/domain/Producer';
 import { ProducerService } from 'src/Internal/Core/service/producer.service';
 
 @Controller('producer')
 export class ProducerController {
-  private producerService = new ProducerService(
-    new ProducerRepositoryAdapter(),
-  );
+  constructor(private readonly producerService: ProducerService) {}
 
   @Get(':id')
   async findByd(@Param('id') id: string) {
