@@ -22,6 +22,15 @@ export class ProducerService {
     if (!isValidDocument(data.documento)) {
       throw new ValidationError(`Invalid document format: ${data.documento}`);
     }
+    function verifyTotalArea(totalArea: number, areas: any[]): boolean {
+      console.log(totalArea, areas);
+      return true;
+    }
+
+    if (verifyTotalArea(1, [{}]))
+      throw new ValidationError(
+        `The sum of the areas cannot exceed the total area`,
+      );
     const created = await this.producerRepository.create(data);
     if (!created) {
       throw new Error(`Could not create producer with ID ${data.id}`);
