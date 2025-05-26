@@ -4,14 +4,14 @@ export function mockProducer(
   overrides: Partial<ProdutorRural> = {},
 ): ProdutorRural {
   return {
-    id: '123',
+    id: '12345',
     nome: 'New Name',
     documento: '123.456.789-00',
     fazendas: [
       {
         id: 'farm-001',
         nome: 'Updated Farm Name',
-        cidade: 'São Miguel do Tapuio',
+        cidade: 'City',
         estado: 'PI',
         areaTotalHA: 6,
         areaAgricultavelHa: 4,

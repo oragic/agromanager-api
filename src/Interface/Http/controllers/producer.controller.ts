@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ProdutorRural } from 'src/Internal/Core/domain/Producer';
-import { ProducerService } from 'src/Internal/Core/service/producer.service';
+import { ProducerService } from '../../../Internal/Core/service/producer.service';
 
 @Controller('producer')
 export class ProducerController {

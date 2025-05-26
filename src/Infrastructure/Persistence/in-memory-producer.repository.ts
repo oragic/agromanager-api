@@ -1,5 +1,8 @@
 import { ProdutorRural } from 'src/Internal/Core/domain/Producer';
-import { ConflictError, NotFoundError } from 'src/Internal/Core/errors/errors';
+import {
+  ConflictError,
+  NotFoundError,
+} from '../../Internal/Core/errors/errors';
 
 export class InMemoryProducer {
   private producers: ProdutorRural[] = [
