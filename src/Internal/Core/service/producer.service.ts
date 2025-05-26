@@ -3,13 +3,13 @@ import { ProdutorRural } from '../domain/Producer';
 import { NotFoundError, ValidationError } from '../errors/errors';
 import { ProducerRepository } from '../port/producer';
 import { isValidDocument } from '../utils/document.utils';
-import { PRODUCER_REPOSITORY } from '../port/producer.tokens';
 import { usedAreaLessThan } from '../utils/farm.utils';
 import { DomainError } from '../errors/DomainError';
 @Injectable()
 export class ProducerService {
   constructor(
-    @Inject(PRODUCER_REPOSITORY) private producerRepository: ProducerRepository,
+    @Inject('ProducerRepository')
+    private producerRepository: ProducerRepository,
   ) {}
 
   async findById(id: string): Promise<ProdutorRural | null> {
