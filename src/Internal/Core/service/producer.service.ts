@@ -5,6 +5,7 @@ import { ProducerRepository } from '../port/producer';
 import { isValidDocument } from '../utils/document.utils';
 import { PRODUCER_REPOSITORY } from '../port/producer.tokens';
 import { usedAreaLessThan } from '../utils/farm.utils';
+import { DomainError } from '../errors/DomainError';
 @Injectable()
 export class ProducerService {
   constructor(
@@ -29,7 +30,7 @@ export class ProducerService {
       );
     const created = await this.producerRepository.create(data);
     if (!created) {
-      throw new Error(`Could not create producer with ID ${data.id}`);
+      throw new DomainError(`Could not create producer with ID ${data.id}`);
     }
     return created;
   }

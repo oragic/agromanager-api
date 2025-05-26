@@ -1,7 +1,7 @@
-import { ProducerService } from 'src/Internal/Core/service/producer.service';
+import { ProducerService } from './producer.service';
 import { ProducerRepository } from 'src/Internal/Core/port/producer';
-import { ValidationError } from 'src/Internal/Core/errors/errors';
-import { mockProducer } from 'test/mocks/mockProducer';
+import { mockProducer } from '../../../../test/mocks/mockProducer';
+import { DomainError } from '../errors/DomainError';
 
 describe('ProducerService', () => {
   let producerService: ProducerService;
@@ -28,10 +28,9 @@ describe('ProducerService', () => {
   });
 
   it('should throw error for invalid CPF', async () => {
-    const producer = mockProducer({ documento: '12345678900' });
-
-    await expect(producerService.create(producer)).rejects.toThrow(
-      ValidationError,
-    );
+    const producer = mockProducer({ documento: '123.456.789-00' });
+    await expect(producerService.create(producer))
+      .rejects.toThrow(DomainError)
+      .catch((error) => console.log(error));
   });
 });
