@@ -1,23 +1,38 @@
-import { InMemoryProducer } from '../../../Infrastructure/Persistence/in-memory-producer.repository';
-import { ProdutorRural } from 'src/Internal/Core/domain/Producer';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ProducerEntity } from '../../../Infrastructure/entities/producer.entity';
 import { ProducerRepository } from 'src/Internal/Core/port/producer';
+import { ProdutorRural } from '../../Core/domain/Producer';
 
-export class ProducerRepositoryAdapter implements ProducerRepository {
-  private repository = new InMemoryProducer();
-
-  async findById(id: string): Promise<ProdutorRural | null> {
-    return await this.repository.findById(id);
-  }
+@Injectable()
+export class ProducerTypeOrmRepository implements ProducerRepository {
+  constructor(
+    @InjectRepository(ProducerEntity)
+    private readonly repository: Repository<ProducerEntity>,
+  ) {}
 
   async create(data: ProdutorRural): Promise<ProdutorRural | null> {
-    return await this.repository.create(data);
+    const producer = this.repository.create(data);
+    return this.repository.save(producer);
+  }
+
+  async findById(id: string): Promise<ProdutorRural | null> {
+    return this.repository.findOne({ where: { id } });
   }
 
   async update(data: ProdutorRural): Promise<ProdutorRural | null> {
-    return await this.repository.update(data);
+    const { fazendas, ...updatableFields } = data;
+    await this.repository.update(data.id, updatableFields);  
+    return this.findById(data.id);
   }
 
   async remove(id: string): Promise<boolean> {
-    return await this.repository.remove(id);
+    const result = await this.repository.delete(id);
+    return (result?.affected || 0) > 0;
+  }
+
+  async findAll(): Promise<ProdutorRural[]> {
+    return this.repository.find();
   }
 }
