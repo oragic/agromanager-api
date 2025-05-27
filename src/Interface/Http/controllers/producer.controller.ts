@@ -3,12 +3,14 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
 } from '@nestjs/common';
 import { ProdutorRural } from 'src/Internal/Core/domain/Producer';
 import { ProducerService } from '../../../Internal/Core/service/producer.service';
+import { DomainError } from '../../../Internal/Core/errors/DomainError';
 
 @Controller('producer')
 export class ProducerController {
@@ -16,8 +18,15 @@ export class ProducerController {
 
   @Get(':id')
   async findByd(@Param('id') id: string) {
-    const producer = await this.producerService.findById(id);
-    return producer;
+    try {
+      const producer = await this.producerService.findById(id);
+      return producer;
+    } catch (error) {
+      if (error instanceof DomainError && error.status === 404) {
+        throw new NotFoundException(error.message);
+      }
+      throw error;
+    }
   }
 
   @Post()
@@ -26,8 +35,9 @@ export class ProducerController {
     return producer;
   }
 
-  @Put()
-  async update(@Body() data: ProdutorRural) {
+  @Put(':id')
+  async update(@Body() data: ProdutorRural,@Param('id') id: string) {
+    data.id = id;
     const producer = await this.producerService.update(data);
     return producer;
   }
@@ -35,6 +45,6 @@ export class ProducerController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const removed = await this.producerService.remove(id);
-    return removed;
+    return { success: removed };
   }
 }

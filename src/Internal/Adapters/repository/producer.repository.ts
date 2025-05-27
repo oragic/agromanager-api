@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ProducerEntity } from 'src/Infrastructure/entities/producer.entity';
+import { ProducerEntity } from '../../../Infrastructure/entities/producer.entity';
 import { ProducerRepository } from 'src/Internal/Core/port/producer';
 import { ProdutorRural } from '../../Core/domain/Producer';
 
@@ -12,7 +12,7 @@ export class ProducerTypeOrmRepository implements ProducerRepository {
     private readonly repository: Repository<ProducerEntity>,
   ) {}
 
-  async create(data: ProdutorRural): Promise<ProdutorRural> {
+  async create(data: ProdutorRural): Promise<ProdutorRural | null> {
     const producer = this.repository.create(data);
     return this.repository.save(producer);
   }
@@ -22,7 +22,8 @@ export class ProducerTypeOrmRepository implements ProducerRepository {
   }
 
   async update(data: ProdutorRural): Promise<ProdutorRural | null> {
-    await this.repository.update(data.id, data);
+    const { fazendas, ...updatableFields } = data;
+    await this.repository.update(data.id, updatableFields);  
     return this.findById(data.id);
   }
 
