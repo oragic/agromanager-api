@@ -1,0 +1,225 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "AgroManager API",
+      "description": "API para gerenciamento de produtores rurais, fazendas e culturas.",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "producer": {
+        "post": {
+          "summary": "Cria um novo produtor rural",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string"
+                    },
+                    "documento": {
+                      "type": "string"
+                    },
+                    "safras": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "fazendas": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "nome": {
+                            "type": "string"
+                          },
+                          "cidade": {
+                            "type": "string"
+                          },
+                          "estado": {
+                            "type": "string"
+                          },
+                          "areaTotalHA": {
+                            "type": "number"
+                          },
+                          "areaAgricultavelHa": {
+                            "type": "number"
+                          },
+                          "areaVegetacaoHa": {
+                            "type": "number"
+                          },
+                          "CulturasPlantadas": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "cultura": {
+                                  "type": "string"
+                                },
+                                "safra": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "nome",
+                    "documento",
+                    "safras",
+                    "fazendas"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Produtor criado com sucesso"
+            }
+          }
+        }
+      },
+      "producer/{id}": {
+        "get": {
+          "summary": "Retorna um produtor pelo ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Detalhes do produtor"
+            },
+            "404": {
+              "description": "Produtor n\u00e3o encontrado"
+            }
+          }
+        },
+        "put": {
+          "summary": "Atualiza um produtor pelo ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string"
+                    },
+                    "documento": {
+                      "type": "string"
+                    },
+                    "safras": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "fazendas": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "nome": {
+                            "type": "string"
+                          },
+                          "cidade": {
+                            "type": "string"
+                          },
+                          "estado": {
+                            "type": "string"
+                          },
+                          "areaTotalHA": {
+                            "type": "number"
+                          },
+                          "areaAgricultavelHa": {
+                            "type": "number"
+                          },
+                          "areaVegetacaoHa": {
+                            "type": "number"
+                          },
+                          "CulturasPlantadas": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "cultura": {
+                                  "type": "string"
+                                },
+                                "safra": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "nome",
+                    "documento",
+                    "safras",
+                    "fazendas"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Produtor atualizado com sucesso"
+            },
+            "404": {
+              "description": "Produtor n\u00e3o encontrado"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Remove um produtor pelo ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Produtor removido com sucesso"
+            },
+            "404": {
+              "description": "Produtor n\u00e3o encontrado"
+            }
+          }
+        }
+      }
+    }
+  }
