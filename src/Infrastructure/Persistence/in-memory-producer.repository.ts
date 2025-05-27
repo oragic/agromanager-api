@@ -8,13 +8,13 @@ export class InMemoryProducer {
   private producers: ProdutorRural[] = [
     {
       nome: 'Any body',
-      documento: '363.146.018-00',
+      documento: '123.456.789-00',
       fazendas: [
         {
           areaAgricultavelHa: 3,
           areaVegetacaoHa: 3,
           areaTotalHA: 6,
-          cidade: 'são miguel do tapuio',
+          cidade: 'A',
           CulturasPlantadas: [
             {
               cultura: 'Cultura',
@@ -37,14 +37,12 @@ export class InMemoryProducer {
   private findIndex(id: string): number {
     return this.producers.findIndex((p) => p.id === id);
   }
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async findById(id: string): Promise<ProdutorRural> {
+  findById(id: string): ProdutorRural {
     const found = this.find(id);
     if (!found) throw new NotFoundError('Producer', id);
     return found;
   }
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async create(data: ProdutorRural): Promise<ProdutorRural> {
+  create(data: ProdutorRural): ProdutorRural {
     const exists = this.find(data.id);
     if (exists)
       throw new ConflictError(`Producer with ID ${data.id} already exists.`);
@@ -52,8 +50,7 @@ export class InMemoryProducer {
     this.producers.push(data);
     return data;
   }
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async update(data: ProdutorRural): Promise<ProdutorRural | null> {
+  update(data: ProdutorRural): ProdutorRural | null {
     const index = this.findIndex(data.id);
     if (index === -1)
       throw new NotFoundError(
@@ -63,8 +60,7 @@ export class InMemoryProducer {
     this.producers[index] = data;
     return data;
   }
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async remove(id: string): Promise<boolean> {
+  remove(id: string): boolean {
     const index = this.findIndex(id);
     if (index === -1)
       throw new NotFoundError(`Producer with ID ${id} not found for deletion`);
