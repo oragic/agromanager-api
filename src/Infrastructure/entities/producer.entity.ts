@@ -12,8 +12,8 @@ export class ProducerEntity {
   @Column({ unique: true })
   documento: string;
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   @OneToMany(() => FarmEntity, (farm) => farm.producer, {
+    onDelete: 'CASCADE',
     cascade: true,
     eager: true,
   })

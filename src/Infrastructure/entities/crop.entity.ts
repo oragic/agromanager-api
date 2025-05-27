@@ -12,7 +12,6 @@ export class CropEntity {
   @Column()
   safra: string;
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  @ManyToOne(() => FarmEntity, (farm) => farm.CulturasPlantadas)
+  @ManyToOne(() => FarmEntity, (farm) => farm.CulturasPlantadas, { onDelete: 'CASCADE'})
   farm: FarmEntity;
 }

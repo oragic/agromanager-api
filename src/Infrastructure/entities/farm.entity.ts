@@ -31,11 +31,9 @@ export class FarmEntity {
   @Column('float')
   areaVegetacaoHa: number;
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  @ManyToOne(() => ProducerEntity, (producer) => producer.fazendas)
+  @ManyToOne(() => ProducerEntity, (producer) => producer.fazendas, {onDelete: 'CASCADE'})
   producer: ProducerEntity;
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   @OneToMany(() => CropEntity, (crop) => crop.farm, {
     cascade: true,
     eager: true,
