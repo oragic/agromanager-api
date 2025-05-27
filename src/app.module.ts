@@ -6,7 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProducerEntity } from './Infrastructure/entities/producer.entity';
 import { FarmEntity } from './Infrastructure/entities/farm.entity';
 import { CropEntity } from './Infrastructure/entities/crop.entity';
-
+import { loadEnv } from './config/load-env';
+loadEnv();
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -19,6 +20,9 @@ import { CropEntity } from './Infrastructure/entities/crop.entity';
       autoLoadEntities: true,
       entities: [ProducerEntity, FarmEntity, CropEntity],
       synchronize: true,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
     TypeOrmModule.forFeature([ProducerEntity]),
   ],
